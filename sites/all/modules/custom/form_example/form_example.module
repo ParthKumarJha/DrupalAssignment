@@ -1,0 +1,121 @@
+<?php
+
+  function form_example_menu() {
+
+
+    $items = array();
+
+    $items['form'] = array( //this creates a URL that will call this form at "examples/form-example"
+      'title' =>'My Form', //page title
+      'description' => 'A form to mess around with.',
+      'page callback' => 'drupal_get_form', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
+      'page arguments' => array('form_example_form'), //put the name of the form here
+      'access callback' => TRUE
+    );
+
+    return $items;
+  }
+
+
+  function form_example_form($form, &$form_state) {
+    
+ 
+   
+  $form['title'] = array(
+
+    '#type' => 'textfield', 
+
+    '#title' => 'Team Name', 
+
+    //'#default_value' => $node->title, 
+
+    '#size' => 60, 
+
+    '#maxlength' => 128, 
+
+    '#required' => TRUE,
+
+  );
+
+
+$toppings = array(
+  'Sachin' => t('Sachin'),
+  'Sehwag' => t('Shewag'), 
+  'Yuvi' => t('Yuvi'),
+  
+   'Kamlesh' => t('Kamlesh'),
+    'Virat' => t('Virat')
+    
+);
+
+# the drupal checkboxes form field definition
+$form['player'] = array(
+  '#title' => t('Players'),
+  '#type' => 'checkboxes',
+  '#required' => TRUE,
+  '#options' => $toppings,
+  
+  '#description' => t('Select the players you would like.')
+  
+);
+  
+
+
+    $form['submit_button'] = array(
+      '#type' => 'submit',
+      '#value' => t('Save'),
+    );
+    
+
+ //dpm($form);
+
+    
+    return $form;
+
+  }
+  
+
+ function form_example_form_validate($form, &$form_state) {
+ 	
+//dpm($form);
+
+
+ }
+ 
+ 
+ 
+
+  function form_example_form_submit($form, &$form_state) {
+
+
+  $name=$form_state['values']['title'];
+  $players_array=$form_state['values']['player'];
+  
+drupal_set_message($name);
+
+
+foreach($players_array as $key => $value) {
+	
+	//drupal_set_message( $key);
+	
+	
+if($value != null)
+{
+	drupal_set_message($key);
+
+
+}
+
+
+}
+
+
+
+  
+  }
+
+  
+
+
+
+?>
